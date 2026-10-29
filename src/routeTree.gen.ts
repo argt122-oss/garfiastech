@@ -16,6 +16,9 @@ import { Route as AppsRouteImport } from './routes/apps'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SobreMiRouteImport } from './routes/sobre-mi'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
+import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
 import { Route as AdminLoginRouteImport } from './routes/admin_.login'
 import { Route as AdminSetupRouteImport } from './routes/admin_.setup'
 import { Route as ApiPublicMediaSplatRouteImport } from './routes/api/public/media.$'
@@ -55,6 +58,21 @@ const SobreMiRoute = SobreMiRouteImport.update({
   path: '/sobre-mi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMessagesRoute = AdminMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin_/login',
   path: '/admin/login',
@@ -74,38 +92,46 @@ const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/apps': typeof AppsRoute
   '/contacto': typeof ContactoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/messages': typeof AdminMessagesRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/setup': typeof AdminSetupRoute
+  '/admin/': typeof AdminIndexRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
-  '/admin': typeof AdminRoute
   '/apps': typeof AppsRoute
   '/contacto': typeof ContactoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/messages': typeof AdminMessagesRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/setup': typeof AdminSetupRoute
+  '/admin': typeof AdminIndexRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/apps': typeof AppsRoute
   '/contacto': typeof ContactoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/messages': typeof AdminMessagesRoute
   '/admin_/login': typeof AdminLoginRoute
   '/admin_/setup': typeof AdminSetupRoute
+  '/admin/': typeof AdminIndexRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRouteTypes {
@@ -118,20 +144,25 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/reset-password'
     | '/sobre-mi'
+    | '/admin/categories'
+    | '/admin/messages'
     | '/admin/login'
     | '/admin/setup'
+    | '/admin/'
     | '/api/public/media/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/$slug'
-    | '/admin'
     | '/apps'
     | '/contacto'
     | '/reset-password'
     | '/sobre-mi'
+    | '/admin/categories'
+    | '/admin/messages'
     | '/admin/login'
     | '/admin/setup'
+    | '/admin'
     | '/api/public/media/$'
   id:
     | '__root__'
@@ -142,15 +173,18 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/reset-password'
     | '/sobre-mi'
+    | '/admin/categories'
+    | '/admin/messages'
     | '/admin_/login'
     | '/admin_/setup'
+    | '/admin/'
     | '/api/public/media/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SlugRoute: typeof SlugRoute
-  AdminRoute: typeof AdminRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AppsRoute: typeof AppsRoute
   ContactoRoute: typeof ContactoRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -211,6 +245,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreMiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/categories': {
+      id: '/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/messages': {
+      id: '/admin/messages'
+      path: '/messages'
+      fullPath: '/admin/messages'
+      preLoaderRoute: typeof AdminMessagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin_/login': {
       id: '/admin_/login'
       path: '/admin/login'
@@ -235,10 +290,24 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminCategoriesRoute: typeof AdminCategoriesRoute
+  AdminMessagesRoute: typeof AdminMessagesRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminCategoriesRoute: AdminCategoriesRoute,
+  AdminMessagesRoute: AdminMessagesRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SlugRoute: SlugRoute,
-  AdminRoute: AdminRoute,
+  AdminRoute: AdminRouteWithChildren,
   AppsRoute: AppsRoute,
   ContactoRoute: ContactoRoute,
   ResetPasswordRoute: ResetPasswordRoute,
