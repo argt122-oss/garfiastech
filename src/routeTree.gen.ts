@@ -11,9 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SlugRouteImport } from './routes/$slug'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AppsRouteImport } from './routes/apps'
 import { Route as ContactoRouteImport } from './routes/contacto'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SobreMiRouteImport } from './routes/sobre-mi'
+import { Route as AdminLoginRouteImport } from './routes/admin_.login'
+import { Route as AdminSetupRouteImport } from './routes/admin_.setup'
 import { Route as ApiPublicMediaSplatRouteImport } from './routes/api/public/media.$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -26,6 +30,11 @@ const SlugRoute = SlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppsRoute = AppsRouteImport.update({
   id: '/apps',
   path: '/apps',
@@ -36,9 +45,24 @@ const ContactoRoute = ContactoRouteImport.update({
   path: '/contacto',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreMiRoute = SobreMiRouteImport.update({
   id: '/sobre-mi',
   path: '/sobre-mi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin_/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSetupRoute = AdminSetupRouteImport.update({
+  id: '/admin_/setup',
+  path: '/admin/setup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
@@ -50,51 +74,89 @@ const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
+  '/admin': typeof AdminRoute
   '/apps': typeof AppsRoute
   '/contacto': typeof ContactoRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/setup': typeof AdminSetupRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
+  '/admin': typeof AdminRoute
   '/apps': typeof AppsRoute
   '/contacto': typeof ContactoRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/setup': typeof AdminSetupRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$slug': typeof SlugRoute
+  '/admin': typeof AdminRoute
   '/apps': typeof AppsRoute
   '/contacto': typeof ContactoRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin_/login': typeof AdminLoginRoute
+  '/admin_/setup': typeof AdminSetupRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/$slug' | '/apps' | '/contacto' | '/sobre-mi' | '/api/public/media/$'
+    | '/'
+    | '/$slug'
+    | '/admin'
+    | '/apps'
+    | '/contacto'
+    | '/reset-password'
+    | '/sobre-mi'
+    | '/admin/login'
+    | '/admin/setup'
+    | '/api/public/media/$'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/$slug' | '/apps' | '/contacto' | '/sobre-mi' | '/api/public/media/$'
+    | '/'
+    | '/$slug'
+    | '/admin'
+    | '/apps'
+    | '/contacto'
+    | '/reset-password'
+    | '/sobre-mi'
+    | '/admin/login'
+    | '/admin/setup'
+    | '/api/public/media/$'
   id:
     | '__root__'
     | '/'
     | '/$slug'
+    | '/admin'
     | '/apps'
     | '/contacto'
+    | '/reset-password'
     | '/sobre-mi'
+    | '/admin_/login'
+    | '/admin_/setup'
     | '/api/public/media/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SlugRoute: typeof SlugRoute
+  AdminRoute: typeof AdminRoute
   AppsRoute: typeof AppsRoute
   ContactoRoute: typeof ContactoRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SobreMiRoute: typeof SobreMiRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminSetupRoute: typeof AdminSetupRoute
   ApiPublicMediaSplatRoute: typeof ApiPublicMediaSplatRoute
 }
 
@@ -114,6 +176,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/apps': {
       id: '/apps'
       path: '/apps'
@@ -128,11 +197,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre-mi': {
       id: '/sobre-mi'
       path: '/sobre-mi'
       fullPath: '/sobre-mi'
       preLoaderRoute: typeof SobreMiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin_/login': {
+      id: '/admin_/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin_/setup': {
+      id: '/admin_/setup'
+      path: '/admin/setup'
+      fullPath: '/admin/setup'
+      preLoaderRoute: typeof AdminSetupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/media/$': {
@@ -148,9 +238,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SlugRoute: SlugRoute,
+  AdminRoute: AdminRoute,
   AppsRoute: AppsRoute,
   ContactoRoute: ContactoRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SobreMiRoute: SobreMiRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminSetupRoute: AdminSetupRoute,
   ApiPublicMediaSplatRoute: ApiPublicMediaSplatRoute,
 }
 export const routeTree = rootRouteImport
