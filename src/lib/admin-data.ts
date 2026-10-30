@@ -11,3 +11,15 @@ export async function createCategory(name: string, order: number) {
   }
   return supabase.from("categories").insert({ name: name.trim(), slug, sort_order: order }).select().single();
 }
+
+import { useQuery } from "@tanstack/react-query";
+export function useSettings() {
+  return useQuery({
+    queryKey: ["admin", "settings"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("site_settings").select("*").eq("id", 1).single();
+      if (error) throw error;
+      return data;
+    },
+  });
+}

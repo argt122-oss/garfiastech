@@ -11,21 +11,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { deleteImage } from "@/lib/media";
 import { hexColor, isHttpUrl } from "@/lib/validation";
+import { useSettings } from "@/lib/admin-data";
 
 export const Route = createFileRoute("/admin/settings")({ component: SettingsPage });
 
 type S = Tables<"site_settings">;
-
-export function useSettings() {
-  return useQuery({
-    queryKey: ["admin", "settings"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("site_settings").select("*").eq("id", 1).single();
-      if (error) throw error;
-      return data;
-    },
-  });
-}
 
 function SettingsPage() {
   const { data, isLoading } = useSettings();
