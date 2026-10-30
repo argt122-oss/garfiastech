@@ -18,7 +18,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { fetchLinkMetadata } from "@/lib/admin.functions";
 import { deleteImage } from "@/lib/media";
 import { isHttpUrl } from "@/lib/validation";
-import { createCategory } from "./admin.categories";
+import { createCategory } from "@/lib/admin-data";
 
 export const Route = createFileRoute("/admin/apps")({ component: AdminApps });
 
