@@ -17,10 +17,14 @@ import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SobreMiRouteImport } from './routes/sobre-mi'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAppsRouteImport } from './routes/admin.apps'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
+import { Route as AdminPagesRouteImport } from './routes/admin.pages'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminLoginRouteImport } from './routes/admin_.login'
 import { Route as AdminSetupRouteImport } from './routes/admin_.setup'
+import { Route as AdminPagesIdRouteImport } from './routes/admin.pages.$id'
 import { Route as ApiPublicMediaSplatRouteImport } from './routes/api/public/media.$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -63,6 +67,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAppsRoute = AdminAppsRouteImport.update({
+  id: '/apps',
+  path: '/apps',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
   id: '/categories',
   path: '/categories',
@@ -71,6 +80,16 @@ const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
 const AdminMessagesRoute = AdminMessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPagesRoute = AdminPagesRouteImport.update({
+  id: '/pages',
+  path: '/pages',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
@@ -82,6 +101,11 @@ const AdminSetupRoute = AdminSetupRouteImport.update({
   id: '/admin_/setup',
   path: '/admin/setup',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPagesIdRoute = AdminPagesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminPagesRoute,
 } as any)
 const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
   id: '/api/public/media/$',
@@ -97,11 +121,15 @@ export interface FileRoutesByFullPath {
   '/contacto': typeof ContactoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/apps': typeof AdminAppsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/messages': typeof AdminMessagesRoute
+  '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/setup': typeof AdminSetupRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesByTo {
@@ -111,11 +139,15 @@ export interface FileRoutesByTo {
   '/contacto': typeof ContactoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/apps': typeof AdminAppsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/messages': typeof AdminMessagesRoute
+  '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/setup': typeof AdminSetupRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesById {
@@ -127,11 +159,15 @@ export interface FileRoutesById {
   '/contacto': typeof ContactoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/apps': typeof AdminAppsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/messages': typeof AdminMessagesRoute
+  '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin_/login': typeof AdminLoginRoute
   '/admin_/setup': typeof AdminSetupRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRouteTypes {
@@ -144,11 +180,15 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/reset-password'
     | '/sobre-mi'
+    | '/admin/apps'
     | '/admin/categories'
     | '/admin/messages'
+    | '/admin/pages'
+    | '/admin/settings'
     | '/admin/login'
     | '/admin/setup'
     | '/admin/'
+    | '/admin/pages/$id'
     | '/api/public/media/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -158,11 +198,15 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/reset-password'
     | '/sobre-mi'
+    | '/admin/apps'
     | '/admin/categories'
     | '/admin/messages'
+    | '/admin/pages'
+    | '/admin/settings'
     | '/admin/login'
     | '/admin/setup'
     | '/admin'
+    | '/admin/pages/$id'
     | '/api/public/media/$'
   id:
     | '__root__'
@@ -173,11 +217,15 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/reset-password'
     | '/sobre-mi'
+    | '/admin/apps'
     | '/admin/categories'
     | '/admin/messages'
+    | '/admin/pages'
+    | '/admin/settings'
     | '/admin_/login'
     | '/admin_/setup'
     | '/admin/'
+    | '/admin/pages/$id'
     | '/api/public/media/$'
   fileRoutesById: FileRoutesById
 }
@@ -252,6 +300,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/apps': {
+      id: '/admin/apps'
+      path: '/apps'
+      fullPath: '/admin/apps'
+      preLoaderRoute: typeof AdminAppsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/categories': {
       id: '/admin/categories'
       path: '/categories'
@@ -264,6 +319,20 @@ declare module '@tanstack/react-router' {
       path: '/messages'
       fullPath: '/admin/messages'
       preLoaderRoute: typeof AdminMessagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pages': {
+      id: '/admin/pages'
+      path: '/pages'
+      fullPath: '/admin/pages'
+      preLoaderRoute: typeof AdminPagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin_/login': {
@@ -280,6 +349,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSetupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/pages/$id': {
+      id: '/admin/pages/$id'
+      path: '/$id'
+      fullPath: '/admin/pages/$id'
+      preLoaderRoute: typeof AdminPagesIdRouteImport
+      parentRoute: typeof AdminPagesRoute
+    }
     '/api/public/media/$': {
       id: '/api/public/media/$'
       path: '/api/public/media/$'
@@ -290,15 +366,33 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminPagesRouteChildren {
+  AdminPagesIdRoute: typeof AdminPagesIdRoute
+}
+
+const AdminPagesRouteChildren: AdminPagesRouteChildren = {
+  AdminPagesIdRoute: AdminPagesIdRoute,
+}
+
+const AdminPagesRouteWithChildren = AdminPagesRoute._addFileChildren(
+  AdminPagesRouteChildren,
+)
+
 interface AdminRouteChildren {
+  AdminAppsRoute: typeof AdminAppsRoute
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminMessagesRoute: typeof AdminMessagesRoute
+  AdminPagesRoute: typeof AdminPagesRouteWithChildren
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAppsRoute: AdminAppsRoute,
   AdminCategoriesRoute: AdminCategoriesRoute,
   AdminMessagesRoute: AdminMessagesRoute,
+  AdminPagesRoute: AdminPagesRouteWithChildren,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
