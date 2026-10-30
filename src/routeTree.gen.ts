@@ -17,6 +17,7 @@ import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SobreMiRouteImport } from './routes/sobre-mi'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAboutRouteImport } from './routes/admin.about'
 import { Route as AdminAppsRouteImport } from './routes/admin.apps'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
@@ -65,6 +66,11 @@ const SobreMiRoute = SobreMiRouteImport.update({
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAboutRoute = AdminAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminAppsRoute = AdminAppsRouteImport.update({
@@ -121,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/contacto': typeof ContactoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/about': typeof AdminAboutRoute
   '/admin/apps': typeof AdminAppsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/messages': typeof AdminMessagesRoute
@@ -139,6 +146,7 @@ export interface FileRoutesByTo {
   '/contacto': typeof ContactoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/about': typeof AdminAboutRoute
   '/admin/apps': typeof AdminAppsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/messages': typeof AdminMessagesRoute
@@ -159,6 +167,7 @@ export interface FileRoutesById {
   '/contacto': typeof ContactoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sobre-mi': typeof SobreMiRoute
+  '/admin/about': typeof AdminAboutRoute
   '/admin/apps': typeof AdminAppsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/messages': typeof AdminMessagesRoute
@@ -180,6 +189,7 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/reset-password'
     | '/sobre-mi'
+    | '/admin/about'
     | '/admin/apps'
     | '/admin/categories'
     | '/admin/messages'
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/reset-password'
     | '/sobre-mi'
+    | '/admin/about'
     | '/admin/apps'
     | '/admin/categories'
     | '/admin/messages'
@@ -217,6 +228,7 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/reset-password'
     | '/sobre-mi'
+    | '/admin/about'
     | '/admin/apps'
     | '/admin/categories'
     | '/admin/messages'
@@ -300,6 +312,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/about': {
+      id: '/admin/about'
+      path: '/about'
+      fullPath: '/admin/about'
+      preLoaderRoute: typeof AdminAboutRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/apps': {
       id: '/admin/apps'
       path: '/apps'
@@ -379,6 +398,7 @@ const AdminPagesRouteWithChildren = AdminPagesRoute._addFileChildren(
 )
 
 interface AdminRouteChildren {
+  AdminAboutRoute: typeof AdminAboutRoute
   AdminAppsRoute: typeof AdminAppsRoute
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminMessagesRoute: typeof AdminMessagesRoute
@@ -388,6 +408,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAboutRoute: AdminAboutRoute,
   AdminAppsRoute: AdminAppsRoute,
   AdminCategoriesRoute: AdminCategoriesRoute,
   AdminMessagesRoute: AdminMessagesRoute,
