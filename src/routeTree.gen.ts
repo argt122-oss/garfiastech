@@ -21,6 +21,7 @@ import { Route as AdminAppsRouteImport } from './routes/admin.apps'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
 import { Route as AdminPagesRouteImport } from './routes/admin.pages'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminLoginRouteImport } from './routes/admin_.login'
 import { Route as AdminSetupRouteImport } from './routes/admin_.setup'
 import { Route as AdminPagesIdRouteImport } from './routes/admin.pages.$id'
@@ -86,6 +87,11 @@ const AdminPagesRoute = AdminPagesRouteImport.update({
   path: '/pages',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin_/login',
   path: '/admin/login',
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/setup': typeof AdminSetupRoute
   '/admin/': typeof AdminIndexRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/setup': typeof AdminSetupRoute
   '/admin': typeof AdminIndexRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/pages': typeof AdminPagesRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin_/login': typeof AdminLoginRoute
   '/admin_/setup': typeof AdminSetupRoute
   '/admin/': typeof AdminIndexRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/messages'
     | '/admin/pages'
+    | '/admin/settings'
     | '/admin/login'
     | '/admin/setup'
     | '/admin/'
@@ -192,6 +202,7 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/messages'
     | '/admin/pages'
+    | '/admin/settings'
     | '/admin/login'
     | '/admin/setup'
     | '/admin'
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/messages'
     | '/admin/pages'
+    | '/admin/settings'
     | '/admin_/login'
     | '/admin_/setup'
     | '/admin/'
@@ -316,6 +328,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPagesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin_/login': {
       id: '/admin_/login'
       path: '/admin/login'
@@ -364,6 +383,7 @@ interface AdminRouteChildren {
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminMessagesRoute: typeof AdminMessagesRoute
   AdminPagesRoute: typeof AdminPagesRouteWithChildren
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -372,6 +392,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCategoriesRoute: AdminCategoriesRoute,
   AdminMessagesRoute: AdminMessagesRoute,
   AdminPagesRoute: AdminPagesRouteWithChildren,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
