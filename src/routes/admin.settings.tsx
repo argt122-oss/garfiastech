@@ -46,7 +46,7 @@ function SettingsPage() {
     setSaving(true);
     const { id: _id, created_at: _c, updated_at: _u, ...rest } = s;
     const clean = Object.fromEntries(Object.entries(rest).map(([k, v]) => [k, typeof v === "string" && v.trim() === "" && !["hero_title", "hero_subtitle", "bio_short", "bio_long", "logo_text"].includes(k) ? null : v]));
-    const { error } = await supabase.from("site_settings").update(clean).eq("id", 1);
+    const { error } = await supabase.from("site_settings").update(clean as never).eq("id", 1);
     setSaving(false);
     if (error) return toast.error("No se pudo guardar");
     for (const k of ["hero_image_url", "profile_photo_url", "favicon_url"] as const) if (data && data[k] !== s[k]) await deleteImage(data[k]);

@@ -6,7 +6,7 @@ import { AppCard, AppCardSkeleton } from "@/components/site/AppCard";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/apps")({
-  validateSearch: (s: Record<string, unknown>) => ({ cat: typeof s.cat === "string" ? s.cat : undefined }),
+  validateSearch: (s: Record<string, unknown>): { cat?: string } => ({ cat: typeof s.cat === "string" ? s.cat : undefined }),
   loader: ({ context }) => context.queryClient.ensureQueryData(appsQuery),
   head: () => ({
     meta: [

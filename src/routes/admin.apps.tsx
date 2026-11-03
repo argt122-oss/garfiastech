@@ -56,7 +56,7 @@ function AdminApps() {
 
   async function toggle(a: App, field: "is_visible" | "is_featured", v: boolean) {
     setItems((list) => list.map((x) => (x.id === a.id ? { ...x, [field]: v } : x)));
-    const { error } = await supabase.from("apps").update({ [field]: v }).eq("id", a.id);
+    const { error } = await supabase.from("apps").update({ [field]: v } as never).eq("id", a.id);
     if (error) toast.error("No se pudo actualizar");
     refresh();
   }
