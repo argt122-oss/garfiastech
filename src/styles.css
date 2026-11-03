@@ -34,6 +34,13 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-foreground: var(--navy-foreground);
+  --color-graphite: var(--graphite);
+  --color-wine: var(--wine);
+  --color-wine-soft: var(--wine-soft);
+  --color-wine-foreground: var(--wine-foreground);
   --color-ring-offset-background: var(--background);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -54,8 +61,15 @@
 
 :root {
   --radius: 0.75rem;
-  --accent-hex: #2563eb;
-  --background: oklch(0.99 0.003 250);
+  --accent-hex: #102a43;
+  --navy: oklch(0.31 0.062 252);
+  --navy-deep: oklch(0.25 0.055 253);
+  --navy-foreground: oklch(0.97 0.005 250);
+  --graphite: oklch(0.34 0.035 245);
+  --wine: oklch(0.4 0.118 352);
+  --wine-soft: color-mix(in oklab, var(--wine) 10%, transparent);
+  --wine-foreground: oklch(0.98 0.005 350);
+  --background: oklch(0.967 0.004 250);
   --foreground: oklch(0.2 0.03 260);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.2 0.03 260);
@@ -64,16 +78,16 @@
   --primary: var(--accent-hex);
   --primary-foreground: oklch(0.99 0 0);
   --primary-soft: color-mix(in oklab, var(--accent-hex) 10%, transparent);
-  --secondary: oklch(0.96 0.008 250);
+  --secondary: oklch(0.94 0.008 250);
   --secondary-foreground: oklch(0.25 0.03 260);
-  --muted: oklch(0.96 0.008 250);
-  --muted-foreground: oklch(0.5 0.025 258);
-  --accent: oklch(0.95 0.015 255);
+  --muted: oklch(0.945 0.008 250);
+  --muted-foreground: oklch(0.48 0.028 258);
+  --accent: oklch(0.93 0.018 255);
   --accent-foreground: oklch(0.25 0.03 260);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.91 0.01 255);
-  --input: oklch(0.91 0.01 255);
+  --border: oklch(0.9 0.012 255);
+  --input: oklch(0.9 0.012 255);
   --ring: var(--accent-hex);
   --chart-1: oklch(0.6 0.18 255);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -88,11 +102,12 @@
   --sidebar-accent-foreground: oklch(0.25 0.03 260);
   --sidebar-border: oklch(0.91 0.01 255);
   --sidebar-ring: var(--accent-hex);
-  --shadow-soft-value: 0 1px 2px oklch(0.2 0.03 260 / 6%), 0 8px 24px -12px oklch(0.2 0.03 260 / 12%);
-  --shadow-lift-value: 0 2px 4px oklch(0.2 0.03 260 / 6%), 0 24px 48px -20px color-mix(in oklab, var(--accent-hex) 35%, transparent);
+  --shadow-soft-value: 0 1px 2px oklch(0.25 0.05 252 / 7%), 0 10px 28px -14px oklch(0.25 0.05 252 / 16%);
+  --shadow-lift-value: 0 2px 4px oklch(0.25 0.05 252 / 8%), 0 26px 52px -22px color-mix(in oklab, var(--navy) 40%, transparent);
 }
 
 .dark {
+  --wine-soft: color-mix(in oklab, var(--wine) 22%, transparent);
   --background: oklch(0.16 0.02 260);
   --foreground: oklch(0.96 0.005 250);
   --card: oklch(0.2 0.022 260);
@@ -141,6 +156,24 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+  }
+}
+
+@utility hero-navy {
+  background:
+    radial-gradient(60rem 32rem at 85% -10%, color-mix(in oklab, var(--wine) 26%, transparent), transparent 60%),
+    radial-gradient(50rem 30rem at -10% 110%, color-mix(in oklab, var(--accent-hex) 30%, transparent), transparent 55%),
+    linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+}
+
+@utility btn-wine {
+  background-color: var(--color-wine);
+  color: var(--color-wine-foreground);
+  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  &:hover {
+    background-color: color-mix(in oklab, var(--wine) 88%, white);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px -14px color-mix(in oklab, var(--wine) 60%, transparent);
   }
 }
 
