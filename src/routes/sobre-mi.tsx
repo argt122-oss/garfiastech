@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Briefcase, ChevronLeft, ChevronRight, ClipboardList, Cpu, Images, Wrench, X } from "lucide-react";
 import { aboutQuery, shellQuery } from "@/lib/queries";
 import { SmartImage } from "@/components/site/SmartImage";
 import { Reveal } from "@/components/site/Reveal";
@@ -32,13 +32,29 @@ function About() {
   const [lb, setLb] = useState<number | null>(null);
 
   return (
+    <div className="bg-muted/70">
     <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
       <section className="grid gap-12 md:grid-cols-[1fr_1.4fr]">
         <Reveal>
-          <SmartImage src={s?.profile_photo_url} alt={`Foto de ${s?.hero_title ?? "perfil"}`} eager className="aspect-[4/5] w-full rounded-3xl border border-border" />
+          <SmartImage src={s?.profile_photo_url} alt={`Foto de ${s?.hero_title ?? "perfil"}`} eager className="aspect-[4/5] w-full rounded-3xl border border-border shadow-lift" />
         </Reveal>
-        <Reveal delay={100}>
+        <Reveal delay={100} className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-wine">Perfil profesional</p>
           <h1 className="text-4xl font-bold md:text-5xl">Sobre mí</h1>
+          <div className="mt-6 grid grid-cols-3 gap-3">
+            {[
+              { Icon: Cpu, label: "Tecnología" },
+              { Icon: Wrench, label: "Ingeniería" },
+              { Icon: ClipboardList, label: "Gestión de proyectos" },
+            ].map(({ Icon, label }) => (
+              <div key={label} className="flex flex-col items-center gap-2 rounded-2xl bg-muted p-3 text-center text-xs font-medium transition-colors hover:bg-wine-soft">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-navy text-navy-foreground">
+                  <Icon className="h-5 w-5" aria-hidden />
+                </span>
+                {label}
+              </div>
+            ))}
+          </div>
           <SanitizedHtml html={s?.bio_long ?? ""} className="prose-content mt-6 text-muted-foreground" />
         </Reveal>
       </section>
@@ -46,14 +62,14 @@ function About() {
       {data.experience.length > 0 && (
         <section className="mt-24">
           <Reveal>
-            <h2 className="text-3xl font-bold">Experiencia</h2>
+            <SectionTitle Icon={Briefcase}>Experiencia</SectionTitle>
           </Reveal>
-          <ol className="mt-10 space-y-8 border-l-2 border-border pl-8">
+          <ol className="mt-10 space-y-6 border-l-2 border-wine/30 pl-8">
             {data.experience.map((e, i) => (
               <Reveal key={e.id} delay={i * 60}>
-                <li className="relative">
-                  <span className="absolute -left-[2.6rem] top-1.5 h-4 w-4 rounded-full border-4 border-background bg-primary" />
-                  <p className="text-sm font-medium text-primary">
+                <li className="relative rounded-2xl border border-border bg-card p-5 shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+                  <span className="absolute -left-[2.6rem] top-6 h-4 w-4 rounded-full border-4 border-muted bg-wine" />
+                  <p className="text-sm font-medium text-wine">
                     {e.start_date ? `${fmt(e.start_date)} — ${e.end_date ? fmt(e.end_date) : "Presente"}` : e.end_date ? fmt(e.end_date) : ""}
                   </p>
                   <h3 className="mt-1 text-xl font-semibold">{e.role}</h3>
@@ -69,10 +85,10 @@ function About() {
       {data.skills.length > 0 && (
         <section className="mt-24">
           <Reveal>
-            <h2 className="text-3xl font-bold">Habilidades</h2>
+            <SectionTitle Icon={Cpu}>Habilidades</SectionTitle>
             <ul className="mt-8 flex flex-wrap gap-2">
               {data.skills.map((sk) => (
-                <li key={sk.id} className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium">
+                <li key={sk.id} className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium shadow-soft transition-colors hover:border-wine/50 hover:text-wine">
                   {sk.name}
                 </li>
               ))}
@@ -84,7 +100,7 @@ function About() {
       {data.gallery.length > 0 && (
         <section className="mt-24">
           <Reveal>
-            <h2 className="text-3xl font-bold">Galería</h2>
+            <SectionTitle Icon={Images}>Galería</SectionTitle>
           </Reveal>
           <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">
             {data.gallery.map((g, i) => (
@@ -102,6 +118,18 @@ function About() {
       )}
       {lb !== null && <Lightbox items={data.gallery} index={lb} onChange={setLb} />}
     </div>
+    </div>
+  );
+}
+
+function SectionTitle({ Icon, children }: { Icon: typeof Cpu; children: React.ReactNode }) {
+  return (
+    <h2 className="flex items-center gap-3 text-3xl font-bold">
+      <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy text-navy-foreground">
+        <Icon className="h-5 w-5" aria-hidden />
+      </span>
+      {children}
+    </h2>
   );
 }
 

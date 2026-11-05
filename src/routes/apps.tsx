@@ -39,6 +39,7 @@ function AppsPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-wine">Proyectos</p>
       <h1 className="text-4xl font-bold md:text-5xl">Apps</h1>
       <p className="mt-4 max-w-xl text-muted-foreground">Proyectos y aplicaciones en los que he trabajado.</p>
 
@@ -54,7 +55,7 @@ function AppsPage() {
                 onClick={() => navigate({ search: { cat: t.slug }, replace: true, resetScroll: false })}
                 className={cn(
                   "shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                  isActive ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground hover:text-foreground",
+                  isActive ? "border-wine bg-wine text-wine-foreground shadow-soft" : "border-border bg-card text-muted-foreground hover:border-wine/40 hover:text-foreground",
                 )}
               >
                 {t.name}

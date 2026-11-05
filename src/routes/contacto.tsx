@@ -56,21 +56,23 @@ function Contact() {
   }
 
   return (
+    <div className="hero-navy text-navy-foreground">
     <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[1fr_1.3fr] md:py-24">
       <div>
+        <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-navy-foreground/70">Hablemos</p>
         <h1 className="text-4xl font-bold md:text-5xl">Contacto</h1>
-        <p className="mt-4 text-muted-foreground">¿Tienes una idea o un proyecto? Escríbeme y te responderé lo antes posible.</p>
+        <p className="mt-4 text-navy-foreground/80">¿Tienes una idea o un proyecto? Escríbeme y te responderé lo antes posible.</p>
         {data.settings?.email && (
-          <a href={`mailto:${data.settings.email}`} className="mt-6 block font-semibold text-primary hover:underline">
+          <a href={`mailto:${data.settings.email}`} className="mt-6 block font-semibold text-navy-foreground underline-offset-4 hover:underline">
             {data.settings.email}
           </a>
         )}
         <SocialLinks settings={data.settings} className="mt-6" />
       </div>
-      <div className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
+      <div className="rounded-3xl border border-white/10 bg-card p-6 text-card-foreground shadow-lift md:p-10">
         {done ? (
           <div className="flex flex-col items-center py-10 text-center">
-            <CheckCircle2 className="h-12 w-12 text-primary" />
+            <CheckCircle2 className="h-12 w-12 text-wine" />
             <h2 className="mt-4 text-xl font-semibold">¡Mensaje enviado!</h2>
             <p className="mt-2 text-muted-foreground">Gracias por escribir. Te responderé pronto.</p>
           </div>
@@ -94,12 +96,13 @@ function Contact() {
               <Textarea id="message" rows={6} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} aria-invalid={!!errors.message} />
               {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
             </div>
-            <Button type="submit" disabled={busy} className="w-full rounded-full" size="lg">
+            <Button type="submit" disabled={busy} className="btn-wine w-full rounded-full" size="lg">
               {busy ? "Enviando…" : "Enviar mensaje"}
             </Button>
           </form>
         )}
       </div>
+    </div>
     </div>
   );
 }
