@@ -1,8 +1,8 @@
-// @vitest-environment node
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-const config = readFileSync(new URL("../../netlify.toml", import.meta.url), "utf8");
+const config = readFileSync(fileURLToPath(`${import.meta.url}/../../../../netlify.toml`), "utf8");
 const omittedKeys = config.match(/^\s*SECRETS_SCAN_OMIT_KEYS\s*=\s*"([^"]*)"/m)?.[1]?.split(",") ?? [];
 
 describe("Netlify public environment configuration", () => {
