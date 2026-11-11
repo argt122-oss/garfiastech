@@ -1,6 +1,8 @@
 [build]
   command = "vite build"
   publish = "dist/client"
+  # The official Netlify Vite plugin generates and registers SSR functions;
+  # do not override its internal functions directory with netlify/functions.
 
 [build.environment]
   # These are public connection settings, also shipped through VITE_*.
