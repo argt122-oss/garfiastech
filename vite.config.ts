@@ -7,7 +7,12 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import netlify from "@netlify/vite-plugin-tanstack-start";
 
+const isNetlify = process.env.NETLIFY === "true";
+
 export default defineConfig({
+  // Netlify owns its SSR output. Do not also let Nitro relocate the client
+  // output or generate a second deployment target during Netlify builds.
+  ...(isNetlify ? { nitro: false as const } : {}),
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
@@ -17,7 +22,7 @@ export default defineConfig({
     plugins: [
       // Netlify sets NETLIFY=true during its builds; gating keeps the Lovable
       // dev/preview server untouched while Netlify gets its deployment target.
-      ...(process.env.NETLIFY ? [netlify()] : []),
+      ...(isNetlify ? [netlify()] : []),
     ],
   },
 });
