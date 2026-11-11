@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const config = readFileSync(fileURLToPath(`${import.meta.url}/../../../../netlify.toml`), "utf8");
+const config = readFileSync(resolve(process.cwd(), "netlify.toml"), "utf8");
 const omittedKeys = config.match(/^\s*SECRETS_SCAN_OMIT_KEYS\s*=\s*"([^"]*)"/m)?.[1]?.split(",") ?? [];
 
 describe("Netlify public environment configuration", () => {
