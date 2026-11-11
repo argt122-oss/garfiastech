@@ -1,3 +1,8 @@
 [build]
   command = "vite build"
   publish = "dist/client"
+
+[build.environment]
+  # These are public connection settings, also shipped through VITE_*.
+  # Keep scanning enabled for every other variable, especially private keys.
+  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL,VITE_SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,VITE_SUPABASE_PUBLISHABLE_KEY"

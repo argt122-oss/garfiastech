@@ -18,3 +18,4 @@
 - First admin is created only via invitation email to the `ADMIN_EMAIL` secret; public sign-up is disabled.
 - Rich text is sanitized with DOMPurify before save and on render.
 - tsconfig strict extras (exactOptionalPropertyTypes etc.) are relaxed to keep Supabase-typed code readable.
+- Netlify secret scanning exempts only the public URL and publishable-key variable pairs via SECRETS_SCAN_OMIT_KEYS; keep private-key scanning enabled to prevent credential leaks without blocking intentional public bundles.
